@@ -1,5 +1,5 @@
 <details>
-<summary>Versão em Português</summary>
+<summary>Versão em Português 🇧🇷 </summary>
 # Gerador de carteira de criptomoeda
 
 ### Principais Características
