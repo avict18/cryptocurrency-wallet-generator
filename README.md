@@ -1,3 +1,64 @@
+<details>
+<summary>Versão em Português</summary>
+# Gerador de carteira de criptomoeda
+
+### Principais Características
+
+- Gerar carteira para bitcoin
+- Gerar chave privada para mainnet bitcoin
+- Gerar chave privada para testnet bitcoin
+
+### Como Usar
+
+Para clonar e executar esta aplicação, você precisará do [Git](https://git-scm.com) e do [Node.js](https://nodejs.org/en/download/) (que vem com o [npm](http://npmjs.com)) instalado no seu computador. A partir da linha de comando:
+
+```bash
+# Clonar este repositório
+$ git clone https://github.com/taisprestes01/cryptocurrency-wallet-generator
+
+# Instalar o Node
+- [https://nodejs.org/en](https://nodejs.org/en)
+
+# Entrar no repositório
+$ cd cryptocurrency-wallet-generator
+
+# Instalar dependências
+$ npm install
+$ npm install bip39
+$ npm install bip32@2.0.6
+$ npm install bitcoinjs-lib
+
+# Executar o aplicativo
+$ cd src
+$ node .\createWallet.js
+```
+<details>
+<summary>Instale Electrum</summary>
+  https://electrum.org/#download
+</details>
+
+<details>
+<summary>Publique sua carteira com a chave primaria criada</summary>
+
+## Abra o Electrum, crie a carteira
+![image](https://github.com/taisprestes01/cryptocurrency-wallet-generator/assets/108246691/e5e74106-2bf0-4bad-b34e-2407d9a1176a)
+
+## importe o endereço
+![image](https://github.com/taisprestes01/cryptocurrency-wallet-generator/assets/108246691/2b96dd62-f95a-46a5-8199-f1e9069a6cf9)
+
+## importe a chave
+![image](https://github.com/taisprestes01/cryptocurrency-wallet-generator/assets/108246691/f3f12799-62c3-429f-9a09-e1951fc2def0)
+
+## cria sua senha
+![image](https://github.com/taisprestes01/cryptocurrency-wallet-generator/assets/108246691/6991f3c2-3bde-421d-a7e5-e13ae602e683)
+
+</details>
+
+## Carteira criada
+
+Você pode procurar seu endereço aqui [here](https://www.blockchain.com/explorer/assets/btc) para ver o saldo.
+Agora você já pode fazer transações
+</details>
 <h1 align="center">
   <br>
   <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://github.com/taisprestes01/cryptocurrency-wallet-generator/assets/108246691/3d8c94bf-42c6-4164-b047-9086d625a446" alt="Markdownify" width="200"></a>
