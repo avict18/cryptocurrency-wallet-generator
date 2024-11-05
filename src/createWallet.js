@@ -1,22 +1,52 @@
-const bip32 = require('bip32');
+ const bip32 = require('bip32');
 const bip39 = require('bip39');
 const bitcoin = require('bitcoinjs-lib');
 
-//define the network
-const network = bitcoin.networks.mainnet;// testnet or mainnet
-const path = "m/49'/0'/0'/0/0";// use "m/49'/1'/0'/0/0" for testnet
+try {
+    // Define the network and path (validate path based on network choice)
+    const network = bitcoin.networks.mainnet; // Change to bitcoin.networks.testnet for testnet
+    const path = network === bitcoin.networks.mainnet 
+        ? "m/49'/0'/0'/0/0" // BIP49 mainnet path
+        : "m/49'/1'/0'/0/0"; // BIP49 testnet path
 
-//generate mnemonic
-const mnemonic = bip39.generateMnemonic();
-const seed = bip39.mnemonicToSeedSync(mnemonic);
+    // Generate mnemonic
+    const mnemonic = bip39.generateMnemonic();
+    if (!bip39.validateMnemonic(mnemonic)) {
+        throw new Error('Generated mnemonic is invalid. Please regenerate.');
+    }
+    
+    // Generate seed from mnemonic
+    const seed = bip39.mnemonicToSeedSync(mnemonic);
+    
+    // Create root node from seed
+    let root;
+    try {
+        root = bip32.fromSeed(seed, network);
+    } catch (error) {
+        throw new Error('Failed to create root node. Possible network mismatch.');
+    }
 
-let root = bip32.fromSeed(seed, network);
+    // Derive account and address
+    let account;
+    try {
+        account = root.derivePath(path);
+    } catch (error) {
+        throw new Error(`Failed to derive path: ${path}. Ensure the path follows BIP49 standard.`);
+    }
 
-let account = root.derivePath(path);
-let node = account.derive(0).derive(0);
+    // Derive address node (first account)
+    const node = account.derive(0).derive(0);
+    if (!node.privateKey || !node.publicKey) {
+        throw new Error('Generated keys are invalid. Please regenerate.');
+    }
 
-let btcAddress = bitcoin.payments.p2wpkh({ pubkey: node.publicKey, network }).address;
+    // Generate Bitcoin address in SegWit (p2wpkh) format
+    const btcAddress = bitcoin.payments.p2wpkh({ pubkey: node.publicKey, network }).address;
+    
+    console.log("Wallet generated with address:", btcAddress);
+    console.log("Private key:", node.toWIF());
+    console.log("Mnemonic:", mnemonic);
 
-console.log("wallet generated with address: ", btcAddress);
-console.log("private key: ", node.toWIF());
-console.log("mnemonic: ", mnemonic);
+} catch (error) {
+    console.error("Error generating wallet:", error.message);
+}
